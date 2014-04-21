@@ -1,0 +1,19 @@
+{
+  "name": "confessions",
+  "version": "0.0.0",
+  "description": "Anonymous confessions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/GlobalZeal/confessions.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GlobalZeal/confessions/issues"
+  },
+  "homepage": "https://github.com/GlobalZeal/confessions"
+}
