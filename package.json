@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/GlobalZeal/confessions/issues"
   },
-  "homepage": "https://github.com/GlobalZeal/confessions"
+  "homepage": "https://github.com/GlobalZeal/confessions",
+  "dependencies": {
+    "express": "^4.0.0"
+  }
 }
