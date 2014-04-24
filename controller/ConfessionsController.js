@@ -27,7 +27,6 @@ Router
 			if( error ) {
 				return response.send( 500, error );
 			}
-
 			response.send( 200, doc );
 		} );
 	} )
