@@ -21,6 +21,31 @@ Router
 				response.send('Post submitted successfully!');
 
 		});
+	} )
+	.get( '/confessions/:messageId', function ( request, response ) {
+		Confessions.findById( request.params.messageId, function (error, doc) {
+			if( error ) {
+				return response.send( 500, error );
+			}
+
+			response.send( 200, doc );
+		} );
+	} )
+	.put( '/confessions/:messageId', function ( request, response ) {
+		Confessions.findById( request.params.messageId, function (error, doc ) {
+			if( error ) {
+				return response.send( 500, error );
+			}
+
+			doc.message = request.body.message;
+
+			doc.save( function ( error ) {
+				if( error ) {
+					return response.send( 500, error );
+				}
+				response.send( 200, doc);
+			} );
+		} );
 	} );
 
 
