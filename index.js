@@ -1,6 +1,6 @@
 var express = require( 'express' );
 var mongoose = require( 'mongoose' );
-
+var connect= require('connect');
 var app = express();
 var utils = require( './utils' );
 var config = require( './config' );
@@ -15,6 +15,10 @@ mongoose.connection.on( 'error', function ( error ) {
 	console.log( 'Error on mongodb connection : ', error );
 } );
 
-app.use( '/confessions', require( './controller/ConfessionsController' ) );
+app.use(connect.bodyParser());
+app.use( '/', require( './controller/ConfessionsController' ) );
+
+
+
 
 app.listen( config.port, config.host );

@@ -2,12 +2,12 @@ var mongoose = require( 'mongoose' );
 var Schema = mongoose.Schema;
 
 var Confession = new Schema( {
-	'message' : {
+	message : {
 		'type' : String,
 		'required' : true
 	},
 
-	'alias' : {
+	alias : {
 		'type' : String,
 		'default' : 'Anonymous'
 	}
