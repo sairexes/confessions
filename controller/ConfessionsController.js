@@ -48,6 +48,15 @@ Router
 
 			response.send( request.params.messageId + " DELETED!" );
 		} );
+	} )
+	.delete( '/confessions', function( request, response ) {
+		Confessions.remove( {}, function( error ) {
+			if( error ) {
+				response.send( 500, error );
+			}
+
+			response.send( "All Items Deleted!" );
+		} );
 	} );
 	
 
