@@ -23,7 +23,7 @@ Router
 		});
 	} )
 	.get( '/confessions/:messageId', function ( request, response ) {
-		Confessions.findById( request.params.messageId, function (error, doc) {
+		Confessions.findById( request.params.messageId, function ( error, doc ) {
 			if( error ) {
 				return response.send( 500, error );
 			}
@@ -32,24 +32,23 @@ Router
 		} );
 	} )
 	.put( '/confessions/:messageId', function ( request, response ) {
-		Confessions.findById( request.params.messageId, function (error, doc ) {
+		Confessions.update( { _id : request.params.messageId}, { message : request.body.message }, { multi : true }, function( error ) {
 			if( error ) {
-				return response.send( 500, error );
+				response.send( 500, error );
+			}
+			
+			response.send( request.params.messageId + " UPDATED!" );
+		});
+	} )
+	.delete( '/confessions/:messageId', function( request, response ) {
+		Confessions.remove( { _id : request.params.messageId }, function( error ) {
+			if( error ) {
+				response.send( 500, error );
 			}
 
-			doc.message = request.body.message;
-
-			doc.save( function ( error ) {
-				if( error ) {
-					return response.send( 500, error );
-				}
-				response.send( 200, doc);
-			} );
+			response.send( request.params.messageId + " DELETED!" );
 		} );
 	} );
-
-
-
 	
 
 module.exports = Router;
