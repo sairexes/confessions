@@ -13,39 +13,45 @@ Router
 		} );
 	} )
 	.post( '/confessions', function ( request, response ) {
-		var new_post=new Confessions({message:request.body.message,alias:request.body.alias});
-		new_post.save(function (err) {
-			if (err) 
-				response.send('Error on save!');
-			else
-				response.send('Post submitted successfully!');
+		var newPost = new Confessions( {
+			message : request.body.message,
+			alias   : request.body.alias
+		} );
 
-		});
+		newPost.save( function ( err ) {
+			if ( error ) {
+				return response.send( 500, err );
+			}
+			response.send( 200, { 'status' : 'OK' } );
+		} );
 	} )
 	.get( '/confessions/:messageId', function ( request, response ) {
 		Confessions.findById( request.params.messageId, function ( error, doc ) {
-			if( error ) {
-				return response.send( 500, error );
+			if ( error ) {
+				return response.send( 500, err );
 			}
 			response.send( 200, doc );
 		} );
 	} )
 	.put( '/confessions/:messageId', function ( request, response ) {
-		Confessions.update( { _id : request.params.messageId}, { message : request.body.message }, { multi : true }, function( error ) {
-			if( error ) {
-				response.send( 500, error );
-			}
-			
-			response.send( request.params.messageId + " UPDATED!" );
-		});
+		Confessions.update( {
+			_id : request.params.messageId},
+			{ message : request.body.message },
+			{ multi : true },
+			function( error, doc ) {
+				if ( error ) {
+					response.send( 500, error );
+				}
+				response.send( 200, doc );
+		} );
 	} )
 	.delete( '/confessions/:messageId', function( request, response ) {
-		Confessions.remove( { _id : request.params.messageId }, function( error ) {
-			if( error ) {
-				response.send( 500, error );
-			}
-
-			response.send( request.params.messageId + " DELETED!" );
+		Confessions.remove( { _id : request.params.messageId },
+			function( error, doc ) {
+				if ( error ) {
+					response.send( 500, error );
+				}
+				response.send( 200, doc );
 		} );
 	} )
 	.delete( '/confessions', function( request, response ) {
@@ -53,8 +59,7 @@ Router
 			if( error ) {
 				response.send( 500, error );
 			}
-
-			response.send( "All Items Deleted!" );
+			response.send( 200 );
 		} );
 	} );
 	
