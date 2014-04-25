@@ -22,3 +22,5 @@ app.use( connect.bodyParser() );
 app.use( '/', require( './controller/ConfessionsController' ) );
 
 app.listen( config.port, config.host );
+
+module.exports = app;
