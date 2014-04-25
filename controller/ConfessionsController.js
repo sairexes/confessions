@@ -18,9 +18,9 @@ Router
 			alias   : request.body.alias
 		} );
 
-		newPost.save( function ( err ) {
+		newPost.save( function ( error ) {
 			if ( error ) {
-				return response.send( 500, err );
+				return response.send( 500, error );
 			}
 			response.send( 200, { 'status' : 'OK' } );
 		} );
@@ -28,7 +28,7 @@ Router
 	.get( '/confessions/:messageId', function ( request, response ) {
 		Confessions.findById( request.params.messageId, function ( error, doc ) {
 			if ( error ) {
-				return response.send( 500, err );
+				return response.send( 500, error );
 			}
 			response.send( 200, doc );
 		} );
@@ -51,17 +51,16 @@ Router
 				if ( error ) {
 					response.send( 500, error );
 				}
-				response.send( 200, doc );
+				response.send( 200 );
 		} );
 	} )
 	.delete( '/confessions', function( request, response ) {
 		Confessions.remove( {}, function( error ) {
-			if( error ) {
+			if ( error ) {
 				response.send( 500, error );
 			}
 			response.send( 200 );
 		} );
 	} );
 	
-
 module.exports = Router;
