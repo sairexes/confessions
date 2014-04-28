@@ -4,33 +4,12 @@ var server = require( '../..' );
 
 describe( 'ConfessionController', function () {
 
-	describe( 'GET' , function () {
-
-		it( 'should return a response', function ( done ) {
-
-			request( server )
-				.get( '/confessions' )
-				.expect( 'Content-Type', /json/ )
-				.expect( 200 )
-				.end( function( err, res ) {
-					if ( err ) throw err;
-
-					res.body.should.be.ok;
-					res.body.should.be.an.instanceof( Array );
-					res.body.length.should.not.be.above( 100 );
-					done();
-				} );
-
-		} );
-
-	} );
+	var testPost = {
+		'message' : 'Mocha test 01',
+		'alias'   : 'Rj'
+	};
 
 	describe( 'POST' , function () {
-
-		var testPost = {
-			'message' : 'Mocha test 01',
-			'alias'	  : 'Rj'
-		}
 
 		it( 'should return a response', function ( done ) {
 
@@ -44,6 +23,31 @@ describe( 'ConfessionController', function () {
 
 					res.body.should.be.ok;
 					res.body.should.be.an.instanceof( Object );
+					res.body.message.should.equal( testPost.message );
+					res.body.alias.should.equal( testPost.alias );
+					done();
+				} );
+
+		} );
+
+	} );
+
+	describe( 'GET' , function () {
+
+		it( 'should return a response', function ( done ) {
+
+			request( server )
+				.get( '/confessions' )
+				.expect( 'Content-Type', /json/ )
+				.expect( 200 )
+				.end( function( err, res ) {
+					if ( err ) throw err;
+
+					testPost.id = res.body._id;
+
+					res.body.should.be.ok;
+					res.body.should.be.an.instanceof( Array );
+					res.body.length.should.not.be.above( 1 );
 					done();
 				} );
 
