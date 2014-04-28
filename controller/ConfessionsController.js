@@ -50,19 +50,19 @@ Router
 	} )
 	.delete( '/confessions/:messageId', function( request, response ) {
 		Confessions.remove( { _id : request.params.messageId },
-			function( error, doc ) {
+			function( error ) {
 				if ( error ) {
 					response.send( 500, error );
 				}
-				response.send( 200 );
+				response.send( 200, { 'status' : 'OK' } );
 		} );
 	} )
 	.delete( '/confessions', function( request, response ) {
-		Confessions.remove( {}, function( error ) {
+		Confessions.remove( {}, function( error) {
 			if ( error ) {
 				response.send( 500, error );
 			}
-			response.send( 200 );
+			response.send( 200, { 'status' : 'OK' } );
 		} );
 	} );
 

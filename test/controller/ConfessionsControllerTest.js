@@ -72,5 +72,35 @@ describe( 'ConfessionController', function () {
 		} );
 	} );
 
+	describe( 'DELETE' , function() {
+		it( 'should delete confession with Id', function( done ){
+
+			request( server )
+				.delete( '/confessions/' + testPost.id )
+				.expect( 200 )
+				.end( function(err, res) {
+					if( err ) throw err;
+					res.body.should.be.ok;
+					done();
+				} );
+
+		} );
+	} );
+
+	describe( 'DELETE' , function() {
+
+		it( 'should delete all confessions', function ( done ) {
+
+			request( server )
+				.delete( '/confessions' )
+				.expect( 200 )
+				.end( function(err, res) {
+					if( err ) throw err;
+					res.body.should.be.ok;
+					done();
+				} );
+		} );
+
+	} );
 
 } );

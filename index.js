@@ -20,6 +20,7 @@ mongoose.connection.on( 'error', function ( error ) {
 
 app.use( connect.bodyParser() );
 app.use( '/', require( './controller/ConfessionsController' ) );
+app.use( '/', require( './controller/AdminController' ) );
 
 app.listen( config.port, config.host );
 
