@@ -18,11 +18,15 @@ Router
 			alias   : request.body.alias
 		} );
 
-		newPost.save( function ( error ) {
+		if ( request.body.alias === undefined ) {
+			newPost.alias = 'Anonymous';
+		}
+
+		newPost.save( function ( error, doc ) {
 			if ( error ) {
 				return response.send( 500, error );
 			}
-			response.send( 200, { 'status' : 'OK' } );
+			response.send( 200, doc );
 		} );
 	} )
 	.get( '/confessions/:messageId', function ( request, response ) {
@@ -62,5 +66,5 @@ Router
 			response.send( 200 );
 		} );
 	} );
-	
+
 module.exports = Router;

@@ -17,12 +17,38 @@ describe( 'ConfessionController', function () {
 
 					res.body.should.be.ok;
 					res.body.should.be.an.instanceof( Array );
-					res.body.length.should.equal( 1 );
+					res.body.length.should.not.be.above( 100 );
 					done();
 				} );
 
 		} );
 
 	} );
-	
+
+	describe( 'POST' , function () {
+
+		var testPost = {
+			'message' : 'Mocha test 01',
+			'alias'	  : 'Rj'
+		}
+
+		it( 'should return a response', function ( done ) {
+
+			request( server )
+				.post( '/confessions' )
+				.send( testPost )
+				.expect( 'Content-Type', /json/ )
+				.expect( 200 )
+				.end( function( err, res ) {
+					if ( err ) throw err;
+
+					res.body.should.be.ok;
+					res.body.should.be.an.instanceof( Object );
+					done();
+				} );
+
+		} );
+
+	} );
+
 } );
