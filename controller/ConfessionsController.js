@@ -41,12 +41,11 @@ Router
 		Confessions.update( {
 			_id : request.params.messageId},
 			{ message : request.body.message },
-			{ multi : true },
-			function( error, doc ) {
+			function( error ) {
 				if ( error ) {
 					response.send( 500, error );
 				}
-				response.send( 200, doc );
+				response.send( 200 );
 		} );
 	} )
 	.delete( '/confessions/:messageId', function( request, response ) {
