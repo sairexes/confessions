@@ -1,20 +1,44 @@
-var request = require( 'supertest' );
-var should = require( 'should' );
-var server = require( '../../' );
+'use strict';
+
+var request  = require( 'supertest' );
+var should   = require( 'should' );
+var fixtures = require( '../fixtures' );
 
 describe( 'ConfessionController', function () {
-
+	var app, mongodb;
 
 	var testPost = {
 		'message' : 'Mocha test 01',
 		'alias'   : 'Rj'
 	};
 
+	before( function ( done ) {
+		fixtures.createServer( 'ConfessionsController',
+			function ( error, server ) {
+				app = server;
+
+				fixtures.connectMongo( null, function ( error, conn ) {
+					if ( error ) {
+						done( error );
+					}
+
+					mongodb = conn.db;
+					done();
+				} );
+		} );
+	} );
+
+	after( function ( done ) {
+		mongodb.dropDatabase( function () {
+			done();
+		} );
+	} );
+
 	describe( 'POST' , function () {
 
 		it( 'should return a response', function ( done ) {
 
-			request( server )
+			request( app )
 				.post( '/confessions' )
 				.send( testPost )
 				.expect( 'Content-Type', /json/ )
@@ -37,7 +61,7 @@ describe( 'ConfessionController', function () {
 
 		it( 'should return a response', function ( done ) {
 
-			request( server )
+			request( app )
 				.get( '/confessions' )
 				.expect( 'Content-Type', /json/ )
 				.expect( 200 )
@@ -59,7 +83,7 @@ describe( 'ConfessionController', function () {
 
 	describe( 'PUT', function( ) {
 		it( 'should return a response', function ( done ) {
-			request( server )
+			request( app )
 				.put( '/confessions/' + testPost.id )
 				.send( { 'message' : 'OK'} )
 				.expect( 200 )
@@ -75,7 +99,7 @@ describe( 'ConfessionController', function () {
 	describe( 'DELETE' , function() {
 		it( 'should delete confession with Id', function( done ){
 
-			request( server )
+			request( app )
 				.delete( '/confessions/' + testPost.id )
 				.expect( 200 )
 				.end( function(err, res) {
@@ -87,20 +111,20 @@ describe( 'ConfessionController', function () {
 		} );
 	} );
 
-	describe( 'DELETE' , function() {
+	// describe( 'DELETE' , function() {
 
-		it( 'should delete all confessions', function ( done ) {
+	// 	it( 'should delete all confessions', function ( done ) {
 
-			request( server )
-				.delete( '/confessions' )
-				.expect( 200 )
-				.end( function(err, res) {
-					if( err ) throw err;
-					res.body.should.be.ok;
-					done();
-				} );
-		} );
+	// 		request( app )
+	// 			.delete( '/confessions' )
+	// 			.expect( 200 )
+	// 			.end( function(err, res) {
+	// 				if( err ) throw err;
+	// 				res.body.should.be.ok;
+	// 				done();
+	// 			} );
+	// 	} );
 
-	} );
+	// } );
 
 } );
